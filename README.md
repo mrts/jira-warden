@@ -19,6 +19,7 @@ Available commands:
  - `issue_add_worklog`
  - `issue_set_original_estimate_from_points`
  - `sprint_daily_update_worklogs_and_remaining`
+ - `sprint_set_estimates_from_points`
  - `sprint_verify_subtasks_exist_and_set_subtask_estimates_from_points`
 
 Run

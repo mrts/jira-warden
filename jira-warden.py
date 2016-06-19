@@ -134,6 +134,22 @@ def _print_set_estimate_from_points_message(points, hours, issue):
                'Issue {issue[key]} has no points, original estimate not updated')
     print(message.format(**locals()))
 
+def sprint_set_estimates_from_points():
+    message = 'Setting estimates from points'
+
+    def script():
+        sprint_issues = _get_issues_of_sprint_from_args(message, subtasks=False)
+        issues_with_subtasks = [issue for issue in sprint_issues
+                                if issue['fields']['subtasks']]
+        _set_subtasks_original_estimate_from_points(issues_with_subtasks)
+        issues_without_subtasks = [issue for issue in sprint_issues
+                                if not issue['fields']['subtasks']]
+        for issue in issues_without_subtasks:
+            points, hours = _set_original_estimate_from_points(issue)
+            _print_set_estimate_from_points_message(points, hours, issue)
+        print('Estimate update completed')
+
+    _run_with_exception_check(script, message)
 
 def sprint_verify_subtasks_exist_and_set_subtask_estimates_from_points():
     message = 'Verifying that subtasks exist and setting subtask estimates from points'
